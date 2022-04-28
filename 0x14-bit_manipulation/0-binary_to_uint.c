@@ -1,37 +1,61 @@
   #include "main.h"
 
 /**
- * binary_to_uint - converts a binary number to an
- * unsigned int.
- * @b: binary.
- *
- * Return: unsigned int.
+ * _strlen - returns length of string (modified)
+ * @s: string (const)
+ * Return: length of string
  */
-unsigned int binary_to_uint(const char *b)
+
+int _strlen(const char *s)
 {
-	unsigned int ui;
-	int len, base_two;
+	int len = 0;
 
-	if (!b)
-		return (0);
-
-	ui = 0;
-
-	for (len = 0; b[len] != '\0'; len++)
-		;
-
-	for (len--, base_two = 1; len >= 0; len--, base_two *= 2)
+	while (s[len] != '\0')
 	{
-		if (b[len] != '0' && b[len] != '1')
-		{
-			return (0);
-		}
-
-		if (b[len] & 1)
-		{
-			ui += base_two;
-		}
+		len++;
 	}
 
-	return (ui);
+	return (len);
+}
+
+/**
+ * power - exponents
+ * @base: base
+ * @exp: exponent
+ * Return: result (int)
+ */
+
+int power(int base, int exp)
+{
+	int i, num;
+
+	num = 1;
+	for (i = 0; i < exp; ++i)
+		num *= base;
+
+	return (num);
+}
+
+/**
+ * binary_to_uint - converts a binary number to an unsigned int
+ * @b: binary
+ * Return: unsigned int
+ */
+
+unsigned int binary_to_uint(const char *b)
+{
+	unsigned int sum;
+	int length, i;
+
+	sum = 0;
+	if (b == NULL)
+		return (sum);
+	length = _strlen(b);
+	for (i = length - 1; i >= 0; i--)
+	{
+		if (b[i] != '0' && b[i] != '1')
+			return (0);
+		sum += (b[i] - '0') * power(2, length - i - 1);
+	}
+	return (sum);
 }
