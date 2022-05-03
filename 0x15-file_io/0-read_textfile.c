@@ -1,39 +1,34 @@
 #include "main.h"
-
 /**
- * read_textfile - Read a text file and print to POSIX stdout
- * @filename: char string of files name
- * @letters: number of letters to read and print
- * Return: number of letters read and printed, or 0 if error
+ * read_textfile - function reads a text file and prints
+ * it to the POSIX standard output.
+ * @filename: char
+ * @letters: list
+ * Return: size of the list
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fd;
-	ssize_t rcount, wcount;
-	char *buffer;
-
-	if (filename == NULL)
-		return (0);
-
-	fd = open(filename, O_RDWR);
-	if (fd == -1)
-		return (0);
-
-	buffer = malloc(sizeof(char) * letters);
-	if (buffer == NULL)
-	{
-		free(buffer);
-		return (0);
-	}
-	rcount = read(fd, buffer, letters);
-	if (rcount == -1)
-		return (0);
-
-	wcount = write(STDOUT_FILENO, buffer, rcount);
-	if (wcount == -1 || rcount != wcount)
-		return (0);
-	free(buffer);
-
-	close(fd);
-	return (wcount);
+int open_file, write_read;
+ssize_t sizeoflist;
+char *buffer = malloc(letters);
+if (buffer == NULL)
+{
+return (0);
+}
+if (filename == NULL)
+return (0);
+open_file = open(filename, O_RDONLY, 0600);
+if (open_file == -1)
+{
+return (0);
+}
+sizeoflist = read(open_file, buffer, letters);
+buffer[letters] = '\0';
+close(open_file);
+write_read = write(STDOUT_FILENO, buffer, sizeoflist);
+if (write_read == -1)
+{
+return (0);
+}
+return (sizeoflist);
 }
