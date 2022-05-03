@@ -102,7 +102,6 @@ void print_osabi(char *ptr)
 	printf("  ABI Version:                       %d\n", ptr[8]);
 }
 
-
 /**
  * print_version - prints version
  * @ptr: magic.
@@ -119,6 +118,7 @@ void print_version(char *ptr)
 
 	printf("\n");
 }
+
 /**
  * print_data - prints data
  * @ptr: magic.
