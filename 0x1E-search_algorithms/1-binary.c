@@ -1,61 +1,53 @@
 #include "search_algos.h"
 
 /**
- * recursive_search - searches for a value in an array of
- * integers using the Binary search algorithm
- *
- *
- * @array: input array
- * @size: size of the array
- * @value: value to search in
- * Return: index of the number
+ * print_subarray - prints a subarray
+ * @array: pointer to array
+ * @first: index of first element to print
+ * @last: index of last element to print
  */
-int recursive_search(int *array, size_t size, int value)
+
+void print_subarray(int *array, size_t first, size_t last)
 {
-	size_t half = size / 2;
-	size_t i;
+	size_t i = 0;
+
+	printf("Searching in array: ");
+	for (i = first; i < last; i++)
+	{
+		printf("%d, ", array[i]);
+	}
+	printf("%d\n", array[i]);
+}
+
+/**
+ * binary_search - search for value in sorted int array using Binary search alg
+ * @array: pointer to int array
+ * @size: size of array
+ * @value: value to find
+ * Return: index of first match or -1 if not found
+ */
+
+int binary_search(int *array, size_t size, int value)
+{
+	size_t first = 0;
+	size_t last = 0;
+	size_t mid = 0;
 
 	if (array == NULL || size == 0)
 		return (-1);
 
-	printf("Searching in array");
+	last = size - 1;
 
-	for (i = 0; i < size; i++)
-		printf("%s %d", (i == 0) ? ":" : ",", array[i]);
-
-	printf("\n");
-
-	if (half && size % 2 == 0)
-		half--;
-
-	if (value == array[half])
-		return ((int)half);
-
-	if (value < array[half])
-		return (recursive_search(array, half, value));
-
-	half++;
-
-	return (recursive_search(array + half, size - half, value) + half);
-}
-
-/**
- * binary_search - calls to binary_search to return
- * the index of the number
- *
- * @array: input array
- * @size: size of the array
- * @value: value to search in
- * Return: index of the number
- */
-int binary_search(int *array, size_t size, int value)
-{
-	int index;
-
-	index = recursive_search(array, size, value);
-
-	if (index >= 0 && array[index] != value)
-		return (-1);
-
-	return (index);
+	while (first <= last)
+	{
+		print_subarray(array, first, last);
+		mid = (first + last) / 2;
+		if (array[mid] > value)
+			last = mid - 1;
+		else if (array[mid] < value)
+			first = mid + 1;
+		else
+			return (mid);
+	}
+	return (-1);
 }
